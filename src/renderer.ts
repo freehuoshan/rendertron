@@ -25,6 +25,7 @@ export class Renderer {
 
   async serialize(requestUrl: string, isMobile: boolean):
       Promise<SerializedResponse> {
+
     /**
      * Executed on the page after the page has loaded. Strips script and
      * import tags to prevent further loading of resources.
@@ -82,6 +83,16 @@ export class Renderer {
       }
     });
 
+      await page.setRequestInterception(true);
+      page.on('request', interceptedRequest => {
+          if (interceptedRequest.resourceType().startsWith('image')){
+              interceptedRequest.abort();
+          }
+          else{
+              interceptedRequest.continue();
+          }
+
+      });
     try {
       // Navigate to page. Wait until there are no oustanding network requests.
       response = await page.goto(
@@ -153,6 +164,7 @@ export class Renderer {
     }
 
     let response: puppeteer.Response|null = null;
+
 
     try {
       // Navigate to page. Wait until there are no oustanding network requests.

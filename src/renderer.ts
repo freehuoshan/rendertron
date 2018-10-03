@@ -83,16 +83,16 @@ export class Renderer {
       }
     });
 
-      await page.setRequestInterception(true);
-      page.on('request', interceptedRequest => {
-          if (interceptedRequest.resourceType().startsWith('image')){
-              interceptedRequest.abort();
-          }
-          else{
-              interceptedRequest.continue();
-          }
-
-      });
+      // await page.setRequestInterception(true);
+      // page.on('request', interceptedRequest => {
+      //     if (interceptedRequest.resourceType().startsWith('image')){
+      //         interceptedRequest.abort();
+      //     }
+      //     else{
+      //         interceptedRequest.continue();
+      //     }
+      //
+      // });
     try {
       // Navigate to page. Wait until there are no oustanding network requests.
       response = await page.goto(
